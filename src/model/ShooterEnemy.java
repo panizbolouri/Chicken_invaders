@@ -15,4 +15,10 @@ public class ShooterEnemy extends Enemy {
     public void draw(Graphics g) {
         g.drawImage(image, x, y, width, height, null);
     }
+
+    @Override
+    public void move(int dx, int dy) {
+        x += dx;
+        y += dy;
+    }
 }
