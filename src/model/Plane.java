@@ -78,7 +78,11 @@ public class Plane {
         }
     }
 
-    public void upgradeFireLevel() { fireLevel++; }
+    public void upgradeFireLevel() {
+        if (fireLevel < 5){
+            fireLevel++;
+        }
+    }
 
     public void activateRapidFire() {
         rapidFireActive = true;
