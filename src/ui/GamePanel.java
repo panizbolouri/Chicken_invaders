@@ -28,6 +28,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private int frameCount = 0;
     private int eggDelayFrames = 180;
     private int score = 0;
+    private int levelTransitionTimer = 0;
 
     public GamePanel(JPanel mainPanel, CardLayout cardLayout) {
         this.mainPanel = mainPanel;
@@ -48,6 +49,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
                 eggs = new ArrayList<>();
                 currentLevel = 1;
                 score = 0;
+                levelTransitionTimer = 90;
                 initLevel();
                 requestFocusInWindow();
                 timer.start();
@@ -128,6 +130,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         if (keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_W]) dy = -1;
         if (keys[KeyEvent.VK_DOWN] || keys[KeyEvent.VK_S]) dy = 1;
         plane.move(dx, dy);
+
+        if (levelTransitionTimer > 0) {
+            levelTransitionTimer--;
+            repaint();
+            return;
+        }
 
         if (keys[KeyEvent.VK_SPACE]) {
             ArrayList<Bullet> newShot = plane.shoot();
@@ -261,6 +269,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             if (currentLevel < 3) {
                 currentLevel++;
                 initLevel();
+                levelTransitionTimer = 90;
             } else {
                 handleGameEnd("Victory! You completed the initial levels!");
                 return;
@@ -290,6 +299,18 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         }
 
         for (Egg egg : eggs) egg.draw(g);
+
+        if (levelTransitionTimer > 0) {
+            g.setColor(new Color(150, 0, 200, 100));
+            g.fillRect(0, 0, 800, 600);
+
+            g.setColor(Color.YELLOW);
+            g.setFont(new Font("Monospaced", Font.BOLD, 60));
+            String text = "LEVEL " + currentLevel;
+            FontMetrics fm = g.getFontMetrics();
+            int textWidth = fm.stringWidth(text);
+            g.drawString(text, (800 - textWidth) / 2, 300);
+        }
 
         g.setColor(Color.WHITE);
         g.setFont(new Font("Monospaced", Font.BOLD, 16));
