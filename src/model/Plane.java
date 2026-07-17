@@ -1,27 +1,26 @@
 package model;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Plane {
-    private int x, y;
-    private int speed = 5;
-    private int lives = 3;
-    private int fireLevel = 1;
-    private long lastShotTime = 0;
-    private long shotDelay = 300;
-    private Image image;
+public abstract class Plane {
+    protected int x, y;
+    protected int speed;
+    protected int lives;
+    protected int fireLevel = 1;
+    protected int fireDelay;
+    protected long lastShotTime = 0;
+    protected int shieldTimer = 0;
+    protected int rapidFireTimer = 0;
+    protected String type;
 
-    private boolean shieldActive = false;
-    private int shieldTimer = 0;
-    private boolean rapidFireActive = false;
-    private int rapidFireTimer = 0;
-
-    public Plane(int x, int y) {
+    public Plane(int x, int y, int speed, int fireDelay, int lives, String type) {
         this.x = x;
         this.y = y;
-        this.image = new ImageIcon("res/plane.png").getImage();
+        this.speed = speed;
+        this.fireDelay = fireDelay;
+        this.lives = lives;
+        this.type = type;
     }
 
     public void move(int dx, int dy) {
@@ -34,80 +33,54 @@ public class Plane {
         if (y > 600 - 100) y = 600 - 100;
     }
 
-    public void updateTimers() {
-        if (shieldActive) {
-            shieldTimer--;
-            if (shieldTimer <= 0) shieldActive = false;
-        }
-        if (rapidFireActive) {
-            rapidFireTimer--;
-            if (rapidFireTimer <= 0) {
-                rapidFireActive = false;
-                shotDelay = 300;
-            }
-        }
-    }
-
     public ArrayList<Bullet> shoot() {
-        ArrayList<Bullet> newBullets = new ArrayList<>();
+        ArrayList<Bullet> createdBullets = new ArrayList<>();
         long currentTime = System.currentTimeMillis();
+        int currentDelay = isRapidFireActive() ? fireDelay / 2 : fireDelay;
 
-        if (currentTime - lastShotTime >= shotDelay) {
+        if (currentTime - lastShotTime >= currentDelay) {
             lastShotTime = currentTime;
-
             if (fireLevel == 1) {
-                newBullets.add(new Bullet(x + 40, y));
+                createdBullets.add(new Bullet(x + 40, y));
+            } else if (fireLevel == 2) {
+                createdBullets.add(new Bullet(x + 20, y));
+                createdBullets.add(new Bullet(x + 60, y));
             } else {
-                int spread = 20;
-                int startX = x + 40 - ((fireLevel - 1) * spread) / 2;
-                for (int i = 0; i < fireLevel; i++) {
-                    newBullets.add(new Bullet(startX + (i * spread), y));
-                }
+                createdBullets.add(new Bullet(x + 10, y));
+                createdBullets.add(new Bullet(x + 40, y - 10));
+                createdBullets.add(new Bullet(x + 70, y));
             }
         }
-        return newBullets;
+        return createdBullets;
     }
 
-    public void draw(Graphics g) {
-        g.drawImage(image, x, y, 100, 100, null);
-        if (shieldActive) {
-            g.setColor(new Color(0, 255, 255, 100));
-            g.fillOval(x - 10, y - 10, 120, 120);
-            g.setColor(Color.CYAN);
-            g.drawOval(x - 10, y - 10, 120, 120);
-        }
+    public abstract void draw(Graphics g);
+
+    public int getDamageAgainstBoss() {
+        return 1;
     }
 
-    public void upgradeFireLevel() {
-        if (fireLevel < 5){
-            fireLevel++;
-        }
-    }
-
-    public void activateRapidFire() {
-        rapidFireActive = true;
-        rapidFireTimer = 480;
-        shotDelay = 150;
-    }
-
-    public void activateShield() {
-        shieldActive = true;
-        shieldTimer = 600;
-    }
-
-    public void addLife() {
-        if (lives < 5) lives++;
+    public void updateTimers() {
+        if (shieldTimer > 0) shieldTimer--;
+        if (rapidFireTimer > 0) rapidFireTimer--;
     }
 
     public void loseLife() {
-        if (!shieldActive) lives--;
+        if (shieldTimer > 0) return;
+        lives--;
     }
+
+    public void addLife() { lives++; }
+    public void upgradeFireLevel() { if (fireLevel < 3) fireLevel++; }
+    public void activateRapidFire() { rapidFireTimer = 300; }
+    public void activateShield() { shieldTimer = 300; }
+    public boolean isShieldActive() { return shieldTimer > 0; }
+    public boolean isRapidFireActive() { return rapidFireTimer > 0; }
+    public boolean isDead() { return lives <= 0; }
 
     public int getX() { return x; }
     public int getY() { return y; }
     public int getLives() { return lives; }
-    public boolean isDead() { return lives <= 0; }
-    public boolean isShieldActive() { return shieldActive; }
     public int getFireLevel() { return fireLevel; }
-    public boolean isRapidFireActive() { return rapidFireActive; }
+    public String getType() { return type; }
 }
