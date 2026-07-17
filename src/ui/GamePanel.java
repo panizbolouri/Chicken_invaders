@@ -370,7 +370,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
                         if (targetEnemy instanceof ShooterEnemy && Math.random() < 0.5) {
                             double angle = Math.atan2(plane.getY() - targetEnemy.getY(), plane.getX() - targetEnemy.getX());
-                            eggs.add(new Egg(targetEnemy.getX() + targetEnemy.getWidth() / 2, targetEnemy.getY() + targetEnemy.getHeight() / 2, Math.cos(angle) * 5, Math.sin(angle) * 5));
+                            eggs.add(new EnemyBullet(targetEnemy.getX() + targetEnemy.getWidth() / 2, targetEnemy.getY() + targetEnemy.getHeight() / 2, Math.cos(angle) * 5, Math.sin(angle) * 5));
                         } else {
                             eggs.add(new Egg(targetEnemy.getX() + targetEnemy.getWidth() / 2 - 17, targetEnemy.getY() + targetEnemy.getHeight(), 0, 4));
                         }
