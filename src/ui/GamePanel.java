@@ -85,10 +85,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         bossEggTimer = 0;
 
         if (currentLevel == 4) {
-            currentBoss = new BossEnemy(300, 50, 50);
+            currentBoss = new BossLevel4(300, 50, 50);
             return;
         } else if (currentLevel == 8) {
-            currentBoss = new FinalBossEnemy(275, 50, 100);
+            currentBoss = new BossLevel8(275, 50, 100);
             return;
         }
 
