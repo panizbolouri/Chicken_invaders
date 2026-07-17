@@ -26,13 +26,13 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private int enemyDirection = 1;
     private double gridSpeed = 1.0;
     private int enemyStepDown = 20;
-
     private int currentLevel = 1;
     private int frameCount = 0;
     private int eggDelayFrames = 180;
     private int bossEggTimer = 0;
     private int freezeTimer = 0;
     private int score = 0;
+    private boolean isPaused = false;
     private int levelTransitionTimer = 0;
 
     public GamePanel(JPanel mainPanel, CardLayout cardLayout) {
@@ -59,6 +59,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
                 freezeTimer = 0;
                 levelTransitionTimer = 20;
                 score = 0;
+                isPaused = false;
                 initLevel();
                 requestFocusInWindow();
                 timer.start();
@@ -169,6 +170,11 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (isPaused) {
+            repaint();
+            return;
+        }
+
         if (freezeTimer > 0) freezeTimer--;
         plane.updateTimers();
 
@@ -483,6 +489,16 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             g.setColor(Color.CYAN);
             g.drawString("[ENEMIES FROZEN]", 620, indicatorY);
         }
+        if (isPaused) {
+            g.setColor(new Color(0, 0, 0, 150));
+            g.fillRect(0, 0, 800, 600);
+            g.setColor(Color.YELLOW);
+            g.setFont(new Font("Monospaced", Font.BOLD, 36));
+            g.drawString("GAME PAUSED", 265, 270);
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Monospaced", Font.PLAIN, 18));
+            g.drawString("Press 'P' to Resume", 285, 310);
+        }
     }
 
     @Override
@@ -498,7 +514,24 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
-        if (code < 256) keys[code] = false;
+
+        if (code == KeyEvent.VK_P) {
+            isPaused = !isPaused;
+            return;
+        }
+
+        if (code < 256) keys[code] = true;
+
+        if (code == KeyEvent.VK_M) {
+            isPaused = true;
+            cardLayout.show(mainPanel, "SettingsPage");
+            return;
+        }
+
+        if (code == KeyEvent.VK_ESCAPE) {
+            keys = new boolean[256];
+            cardLayout.show(mainPanel, "MainMenu");
+        }
     }
 
     @Override
