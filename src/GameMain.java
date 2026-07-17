@@ -1,11 +1,6 @@
 import database.DatabaseManager;
-import ui.GamePanel;
-import ui.HowToPlayPanel;
-import ui.LeaderboardPanel;
-import ui.LoginPanel;
-import ui.MainMenu;
-import ui.RegisterPanel;
-import ui.SettingsPanel;
+import ui.*;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -30,6 +25,7 @@ public class GameMain {
             LeaderboardPanel leaderboardPanel = new LeaderboardPanel(mainPanel, cardLayout);
             HowToPlayPanel howToPlayPanel = new HowToPlayPanel(mainPanel, cardLayout);
             SettingsPanel settingsPanel = new SettingsPanel(mainPanel, cardLayout);
+            StorePanel storePanel = new StorePanel(mainPanel, cardLayout);
 
             mainPanel.add(loginPanel, "LoginPage");
             mainPanel.add(registerPanel, "RegisterPage");
@@ -38,6 +34,7 @@ public class GameMain {
             mainPanel.add(leaderboardPanel, "LeaderboardPage");
             mainPanel.add(howToPlayPanel, "HowToPlayPage");
             mainPanel.add(settingsPanel, "SettingsPage");
+            mainPanel.add(storePanel, "StorePage");
 
             frame.add(mainPanel);
             frame.setVisible(true);

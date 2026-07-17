@@ -49,7 +49,17 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
-                plane = new DefaultPlane(350, 480);
+                String equippedPlane = DatabaseManager.getEquippedPlane(LoginPanel.loggedInUser);
+                if (equippedPlane.equals("Fast")) {
+                    plane = new FastPlane(350, 480);
+                } else if (equippedPlane.equals("Heavy")) {
+                    plane = new HeavyPlane(350, 480);
+                } else if (equippedPlane.equals("Sniper")) {
+                    plane = new SniperPlane(350, 480);
+                } else {
+                    plane = new DefaultPlane(350, 480);
+                }
+
                 bullets = new ArrayList<>();
                 cells = new ArrayList<>();
                 eggs = new ArrayList<>();
