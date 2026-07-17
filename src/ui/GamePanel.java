@@ -500,11 +500,23 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             g.drawString("Press 'P' to Resume", 285, 310);
         }
     }
-
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
+
+        if (code == KeyEvent.VK_P) {
+            isPaused = !isPaused;
+            return;
+        }
+
+        if (code == KeyEvent.VK_M) {
+            isPaused = true;
+            cardLayout.show(mainPanel, "SettingsPage");
+            return;
+        }
+
         if (code < 256) keys[code] = true;
+
         if (code == KeyEvent.VK_ESCAPE) {
             keys = new boolean[256];
             cardLayout.show(mainPanel, "MainMenu");
@@ -514,24 +526,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
-
-        if (code == KeyEvent.VK_P) {
-            isPaused = !isPaused;
-            return;
-        }
-
-        if (code < 256) keys[code] = true;
-
-        if (code == KeyEvent.VK_M) {
-            isPaused = true;
-            cardLayout.show(mainPanel, "SettingsPage");
-            return;
-        }
-
-        if (code == KeyEvent.VK_ESCAPE) {
-            keys = new boolean[256];
-            cardLayout.show(mainPanel, "MainMenu");
-        }
+        if (code < 256) keys[code] = false;
     }
 
     @Override
