@@ -1,4 +1,5 @@
 package ui;
+
 import database.DatabaseManager;
 import model.*;
 import sound.SoundManager;
@@ -48,7 +49,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentShown(ComponentEvent e) {
-                plane = new Plane(350, 480);
+                plane = new DefaultPlane(350, 480);
                 bullets = new ArrayList<>();
                 cells = new ArrayList<>();
                 eggs = new ArrayList<>();
@@ -213,7 +214,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             if (currentBoss != null) {
                 Rectangle bossBounds = new Rectangle(currentBoss.getX(), currentBoss.getY(), currentBoss.getWidth(), currentBoss.getHeight());
                 if (bulletBounds.intersects(bossBounds)) {
-                    currentBoss.takeDamage(1);
+                    currentBoss.takeDamage(plane.getDamageAgainstBoss());
                     if (currentBoss.isDead()) {
                         SoundManager.playSFX("res/hit.wav");
                         explosions.add(new Explosion(currentBoss.getX() + currentBoss.getWidth() / 2, currentBoss.getY() + currentBoss.getHeight() / 2, 80));
@@ -500,6 +501,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             g.drawString("Press 'P' to Resume", 285, 310);
         }
     }
+
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
