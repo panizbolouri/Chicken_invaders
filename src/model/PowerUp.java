@@ -7,7 +7,7 @@ public class PowerUp {
     private int x, y;
     private int speed = 2;
     private int type;
-    // 0: Add Fire, 1: Rapid Fire, 2: Extra Life, 3: Shield, 4: Freeze Bomb
+    // 0: Add Fire, 1: Rapid Fire, 2: Extra Life, 3: Shield, 4: Freeze
     private Image image;
 
     public PowerUp(int x, int y, int type) {

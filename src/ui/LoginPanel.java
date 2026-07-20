@@ -15,10 +15,20 @@ public class LoginPanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
+        JLabel welcomeLabel = new JLabel("Welcome to");
+        welcomeLabel.setForeground(Color.WHITE);
+        welcomeLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        welcomeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
+        JLabel titleLabel = new JLabel("CHICKEN INVADERS!");
+        titleLabel.setForeground(Color.WHITE);
+        titleLabel.setFont(new Font("Tahoma", Font.BOLD, 32));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        // ------------------------------------
+
         Font labelFont = new Font("Tahoma", Font.BOLD, 14);
         Font fieldFont = new Font("Tahoma", Font.PLAIN, 14);
         Color textColor = Color.WHITE;
-
         JLabel userLabel = new JLabel("Username:");
         userLabel.setForeground(textColor);
         userLabel.setFont(labelFont);
@@ -55,23 +65,36 @@ public class LoginPanel extends JPanel {
         registerButton.setPreferredSize(new Dimension(120, 35));
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // قرار دادن تایتل‌ها در بالای صفحه
+        gbc.gridwidth = 2;
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.insets = new Insets(10, 10, 0, 10); // فاصله کمتر در پایین
+        add(welcomeLabel, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 1;
+        gbc.insets = new Insets(0, 10, 30, 10); // فاصله بیشتر در پایین تا فرم ورود
+        add(titleLabel, gbc);
+
+        // برگرداندن تنظیمات به حالت اولیه برای فیلدهای یوزرنیم و پسورد
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.gridwidth = 1;
-        gbc.gridx = 0; gbc.gridy = 0; add(userLabel, gbc);
-        gbc.gridx = 1; gbc.gridy = 0; add(userField, gbc);
-        gbc.gridx = 0; gbc.gridy = 1; add(passLabel, gbc);
-        gbc.gridx = 1; gbc.gridy = 1; add(passField, gbc);
+        gbc.gridx = 0; gbc.gridy = 2; add(userLabel, gbc);
+        gbc.gridx = 1; gbc.gridy = 2; add(userField, gbc);
+        gbc.gridx = 0; gbc.gridy = 3; add(passLabel, gbc);
+        gbc.gridx = 1; gbc.gridy = 3; add(passField, gbc);
 
         gbc.gridwidth = 2;
-        gbc.gridx = 0; gbc.gridy = 2;
+        gbc.gridx = 0; gbc.gridy = 4;
         gbc.insets = new Insets(25, 10, 10, 10);
         add(loginButton, gbc);
 
-        gbc.gridx = 0; gbc.gridy = 3;
+        gbc.gridx = 0; gbc.gridy = 5;
         gbc.insets = new Insets(20, 10, 5, 10);
         add(noAccountLabel, gbc);
 
         gbc.fill = GridBagConstraints.NONE;
-        gbc.gridx = 0; gbc.gridy = 4;
+        gbc.gridx = 0; gbc.gridy = 6;
         gbc.insets = new Insets(5, 10, 10, 10);
         add(registerButton, gbc);
 

@@ -116,7 +116,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         } else if (currentLevel == 3) {
             gridSpeed = 2.0; enemyStepDown = 25; eggDelayFrames = 90; cellCounter = 3;
         } else if (currentLevel == 5) {
-            gridSpeed = 2.5; enemyStepDown = 25; eggDelayFrames = 60; cellCounter = 3;
+            gridSpeed = 2.0; enemyStepDown = 25; eggDelayFrames = 60; cellCounter = 3;
         } else if (currentLevel == 6) {
             gridSpeed = 3.0; enemyStepDown = 30; eggDelayFrames = 48; cellCounter = 4;
         } else if (currentLevel == 7) {
@@ -253,7 +253,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
                                 SoundManager.playSFX("res/hit.wav");
                                 explosions.add(new Explosion(enemy.getX() + enemy.getWidth() / 2, enemy.getY() + enemy.getHeight() / 2, 40));
                                 score += enemy.getScoreValue();
-                                if (Math.random() < 0.10) {
+                                if (Math.random() < 0.15) {
                                     int pType = (int)(Math.random() * 5);
                                     powerUps.add(new PowerUp(enemy.getX() + 20, enemy.getY() + 20, pType));
                                 }
@@ -346,7 +346,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
                             enemy.setX((int)(gridX + cell.getOffsetX()));
                             enemy.setY((int)(gridY + cell.getOffsetY()));
 
-                            int intendedX = (int)(gridX + cell.getOffsetX());
+                            int intendedX = enemy.getX();
                             if (intendedX <= 0 && enemyDirection == -1) {
                                 hitEdge = true;
                             } else if (intendedX >= 800 - enemy.getWidth() && enemyDirection == 1) {
@@ -364,6 +364,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
                 if (hitEdge) {
                     enemyDirection *= -1;
                     gridY += enemyStepDown;
+                    if (gridX < -50) gridX = -50;
+                    if (gridX > 400) gridX = 400;
                 }
 
                 frameCount++;

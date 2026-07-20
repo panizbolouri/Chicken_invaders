@@ -14,9 +14,9 @@ public class SettingsPanel extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(10, 15, 10, 15);
 
-        JLabel titleLabel = new JLabel("SETTINGS");
+        JLabel titleLabel = new JLabel("  ");
         titleLabel.setFont(new Font("Monospaced", Font.BOLD, 40));
-        //titleLabel.setForeground(new Color(0, 255, 255));
+        titleLabel.setForeground(new Color(0, 255, 255));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         gbc.gridx = 0;

@@ -71,7 +71,7 @@ public abstract class Plane {
     }
 
     public void addLife() { lives++; }
-    public void upgradeFireLevel() { if (fireLevel < 3) fireLevel++; }
+    public void upgradeFireLevel() { if (fireLevel < 5) fireLevel++; }
     public void activateRapidFire() { rapidFireTimer = 300; }
     public void activateShield() { shieldTimer = 300; }
     public boolean isShieldActive() { return shieldTimer > 0; }
