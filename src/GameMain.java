@@ -1,4 +1,4 @@
-import database.DatabaseManager;
+import manager.DatabaseManager;
 import ui.*;
 
 import javax.swing.*;

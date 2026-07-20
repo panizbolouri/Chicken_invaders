@@ -2,7 +2,7 @@ package ui;
 
 import javax.swing.*;
 import java.awt.*;
-import sound.SoundManager;
+import manager.SoundManager;
 
 public class SettingsPanel extends JPanel {
     private Image bgImage;

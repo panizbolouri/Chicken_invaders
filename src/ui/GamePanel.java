@@ -1,8 +1,8 @@
 package ui;
 
-import database.DatabaseManager;
+import manager.DatabaseManager;
 import model.*;
-import sound.SoundManager;
+import manager.SoundManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

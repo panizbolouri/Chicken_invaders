@@ -2,7 +2,7 @@ package ui;
 
 import javax.swing.*;
 import java.awt.*;
-import sound.SoundManager;
+import manager.SoundManager;
 
 public class LoginPanel extends JPanel {
 
@@ -101,7 +101,7 @@ public class LoginPanel extends JPanel {
         loginButton.addActionListener(e -> {
             String user = userField.getText();
             String pass = new String(passField.getPassword());
-            if (database.DatabaseManager.loginUser(user, pass)) {
+            if (manager.DatabaseManager.loginUser(user, pass)) {
                 loggedInUser = user;
                 JOptionPane.showMessageDialog(this, "Login Successful!");
                 SoundManager.playMusic("res/music.wav");

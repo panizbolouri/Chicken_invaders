@@ -1,6 +1,6 @@
 package ui;
 
-import database.DatabaseManager;
+import manager.DatabaseManager;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
