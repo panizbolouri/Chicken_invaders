@@ -4,32 +4,24 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MainMenu extends JPanel {
+    private Image bgImage;
+
     public MainMenu(JPanel mainPanel, CardLayout cardLayout) {
-        Color galaxyBg = new Color(15, 10, 35);
-        setBackground(galaxyBg);
+        bgImage = new ImageIcon("res/menu_bg.jpg").getImage();
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(10, 0, 10, 0);
 
-        JLabel titleLabel = new JLabel("CHICKEN INVADERS");
-        titleLabel.setFont(new Font("Monospaced", Font.BOLD, 46));
-        titleLabel.setForeground(new Color(0, 255, 255));
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-        JButton newGameButton = createMenuButton("New Game", new Color(50, 205, 50), Color.BLACK);
-        JButton storeButton = createMenuButton("Store", new Color(255, 140, 0), Color.BLACK);
-        JButton highScoresButton = createMenuButton("High Scores", new Color(138, 43, 226), Color.WHITE);
-        JButton settingsButton = createMenuButton("Settings", new Color(138, 43, 226), Color.WHITE);
-        JButton howToPlayButton = createMenuButton("How to Play", new Color(138, 43, 226), Color.WHITE);
-        JButton exitButton = createMenuButton("Exit", new Color(220, 20, 60), Color.WHITE);
+        JButton newGameButton = createMenuButton("New Game");
+        JButton storeButton = createMenuButton("Store");
+        JButton highScoresButton = createMenuButton("High Scores");
+        JButton settingsButton = createMenuButton("Settings");
+        JButton howToPlayButton = createMenuButton("How to Play");
+        JButton exitButton = createMenuButton("Exit");
 
         gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(10, 10, 60, 10);
-        add(titleLabel, gbc);
-
-        gbc.insets = new Insets(10, 10, 15, 10);
-
+        gbc.gridy = 0; add(Box.createRigidArea(new Dimension(0, 120)), gbc);
         gbc.gridy = 1; add(newGameButton, gbc);
         gbc.gridy = 2; add(storeButton, gbc);
         gbc.gridy = 3; add(highScoresButton, gbc);
@@ -45,15 +37,34 @@ public class MainMenu extends JPanel {
         exitButton.addActionListener(e -> System.exit(0));
     }
 
-    private JButton createMenuButton(String text, Color bg, Color fg) {
-        JButton button = new JButton(text);
-        button.setFont(new Font("Monospaced", Font.BOLD, 22));
-        button.setBackground(bg);
-        button.setForeground(fg);
-        button.setFocusPainted(false);
-        button.setOpaque(true);
+    private JButton createMenuButton(String text) {
+        JButton button = new JButton(text) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(new Color(60, 20, 100, 180));
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2.setColor(new Color(0, 255, 255, 100));
+                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 20, 20);
+                g2.dispose();
+                super.paintComponent(g);
+            }
+        };
+        button.setContentAreaFilled(false);
         button.setBorderPainted(false);
-        button.setPreferredSize(new Dimension(300, 50));
+        button.setFocusPainted(false);
+        button.setForeground(Color.WHITE);
+        button.setFont(new Font("Monospaced", Font.BOLD, 20));
+        button.setPreferredSize(new Dimension(280, 50));
         return button;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (bgImage != null) {
+            g.drawImage(bgImage, 0, 0, getWidth(), getHeight(), this);
+        }
     }
 }
