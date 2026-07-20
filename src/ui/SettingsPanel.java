@@ -16,7 +16,7 @@ public class SettingsPanel extends JPanel {
 
         JLabel titleLabel = new JLabel("SETTINGS");
         titleLabel.setFont(new Font("Monospaced", Font.BOLD, 40));
-        titleLabel.setForeground(new Color(0, 255, 255));
+        //titleLabel.setForeground(new Color(0, 255, 255));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         gbc.gridx = 0;
